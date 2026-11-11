@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVENCIA — Nutricosmética Premium | La esencia de la belleza, la evidencia de la ciencia</title>
+  <meta name="description" content="EVENCIA. Nutricosmética premium desarrollada por Ramón de Cangas, nutricionista y biólogo. Belleza desde el interior con fundamento científico. Envíos a farmacias y centros de estética.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       EVENCIA — Tokens de diseño (paleta de marca)
+       ========================================================================== */
+    :root {
+      /* Colores de marca */
+      --color-verde-bosque: #123D32;
+      --color-verde-bosque-rgb: 18, 61, 50;
+      --color-marfil: #F4F1E9;
+      --color-marfil-rgb: 244, 241, 233;
+      --color-champagne: #C5AA79;
+      --color-champagne-rgb: 197, 170, 121;
+      --color-plata: #B9BEC0;
+      --color-plata-rgb: 185, 190, 192;
+      --color-carbon: #242625;
+      --color-carbon-rgb: 36, 38, 37;
+
+      /* Colores semánticos derivados */
+      --color-bg: var(--color-marfil);
+      --color-surface: #ffffff;
+      --color-text: var(--color-carbon);
+      --color-text-muted: var(--color-plata);
+      --color-primary: var(--color-verde-bosque);
+      --color-primary-hover: #0e3228;
+      --color-accent: var(--color-champagne);
+      --color-accent-hover: #b89d6e;
+      --color-border: rgba(var(--color-plata-rgb), 0.35);
+      --color-focus-ring: var(--color-champagne);
+
+      /* Tipografía */
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+      /* Espaciado y ritmo */
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2.5rem;
+      --space-xl: 4rem;
+      --space-section: 7rem;
+
+      /* Bordes y sombras */
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 1px 3px rgba(var(--color-carbon-rgb), 0.08);
+      --shadow-md: 0 8px 24px rgba(var(--color-carbon-rgb), 0.06);
+      --shadow-lg: 0 20px 40px rgba(var(--color-carbon-rgb), 0.08);
+
+      /* Transiciones y easing (emil-design-eng) */
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --duration-fast: 160ms;
+      --duration-base: 300ms;
+      --duration-slow: 500ms;
+
+      /* Z-index */
+      --z-header: 100;
+      --z-bg: -1;
+    }
+
+    /* ==========================================================================
+       Reset y base
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    a:hover {
+      color: var(--color-primary-hover);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    /* ==========================================================================
+       Utilidades de animación (emil-design-eng)
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+    }
+
+    .reveal.visible,
+    .is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stagger-1 { transition-delay: 60ms; }
+    .stagger-2 { transition-delay: 120ms; }
+    .stagger-3 { transition-delay: 180ms; }
+    .stagger-4 { transition-delay: 240ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ==========================================================================
+       Header / Navegación
+       ========================================================================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-header);
+      background: rgba(var(--color-marfil-rgb), 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.55rem;
+      color: var(--color-verde-bosque);
+      letter-spacing: -0.03em;
+      z-index: var(--z-header);
+      position: relative;
+    }
+
+    .logo span {
+      color: var(--color-champagne);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    nav ul {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--color-carbon);
+      font-size: 0.95rem;
+      font-weight: 500;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      color: var(--color-verde-bosque);
+    }
+
+    .btn-header {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 10px 22px;
+      border: 1px solid var(--color-verde-bosque);
+      background: transparent;
+      color: var(--color-verde-bosque);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: transform var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .btn-header:hover {
+      transform: translateY(-1px);
+      background: var(--color-verde-bosque);
+      color: #fff;
+    }
+
+    .btn-header:active {
+      transform: scale(0.97);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--color-carbon);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: var(--z-header);
+      position: relative;
+    }
+
+    /* ==========================================================================
+       Hero — fondo de imagen (desktop vs móvil)
+       ========================================================================== */
+    .hero {
+      position: relative;
+      padding: var(--space-xl) 0;
+      overflow: hidden;
+    }
+
+    /* Capa de fondo de imagen */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: var(--z-bg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      /* REEMPLAZAR_IMAGEN: Pon aquí tu imagen de escritorio */
+      background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a8a9b4?q=80&w=2000&auto=format&fit=crop');
+    }
+
+    /* Overlay oscuro para legibilidad del texto sobre la imagen */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(var(--color-marfil-rgb), 0.55) 0%,
+        rgba(var(--color-marfil-rgb), 0.85) 50%,
+        rgba(var(--color-marfil-rgb), 0.95) 100%
+      );
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      min-height: 700px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--color-champagne);
+      font-weight: 600;
+      display: block;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: var(--color-verde-bosque);
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-content h1 span {
+      color: var(--color-champagne);
+    }
+
+    .hero-slogan {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--color-carbon);
+      margin-bottom: var(--space-lg);
+      line-height: 1.3;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: var(--color-text-muted);
+      max-width: 480px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--font-body);
+      font-weight: 600;
+      padding: 14px 30px;
+      background: var(--color-verde-bosque);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      background: var(--color-primary-hover);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .btn-outline {
+      font-family: var(--font-body);
+      font-weight: 600;
+      padding: 14px 30px;
+      background: transparent;
+      color: var(--color-carbon);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline:active {
+      transform: scale(0.97);
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visual-ring {
+      position: absolute;
+      inset: -16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-champagne);
+      opacity: 0.5;
+      animation: pulse-ring 7s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .visual-card {
+      position: relative;
+      width: 460px;
+      height: 500px;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .visual-image {
+      flex: 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8e5da 0%, #f4f1e9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-plata);
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+
+    .visual-badge {
+      margin-top: auto;
+      padding: 10px 18px;
+      background: var(--color-verde-bosque);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    /* ==========================================================================
+       Sección base
+       ========================================================================== */
+    .section {
+      padding: var(--space-section) 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto var(--space-xl);
+    }
+
+    .section-head .eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--color-champagne);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      color: var(--color-verde-bosque);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-head p {
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* ==========================================================================
+       Valores (tres columnas)
+       ========================================================================== */
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .valor {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .valor:hover {
+      border-color: var(--color-champagne);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .valor-icon {
+      font-size: 2.2rem;
+      color: var(--color-verde-bosque);
+    }
+
+    .valor h3 {
+      font-size: 1.2rem;
+      color: var(--color-carbon);
+      margin-bottom: var(--space-xs);
+    }
+
+    .valor p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0;
+    }
+
+    /* ==========================================================================
+       Ramón de Cangas / Autoridad
+       ========================================================================== */
+    .autoridad {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .autoridad-texto {
+      padding: var(--space-xl);
+    }
+
+    .autoridad .eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--color-champagne);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    .autoridad h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--color-verde-bosque);
+      margin-bottom: var(--space-md);
+    }
+
+    .autoridad p {
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .firma {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--color-verde-bosque);
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-md);
+      display: inline-block;
+      margin-top: var(--space-md);
+    }
+
+    .autoridad-visual {
+      height: 380px;
+      background: linear-gradient(135deg, #e8e5da 0%, #f4f1e9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-plata);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-style: italic;
+    }
+
+    /* ==========================================================================
+       Complejos / Productos (4 tarjetas)
+       ========================================================================== */
+    .complejos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .complejo-card {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .complejo-card:hover {
+      border-color: var(--color-champagne);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .complejo-icon {
+      font-size: 2rem;
+      color: var(--color-verde-bosque);
+    }
+
+    .complejo-card h3 {
+      font-size: 1.25rem;
+      color: var(--color-carbon);
+      margin-bottom: var(--space-xs);
+    }
+
+    .complejo-card p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0;
+    }
+
+    /* ==========================================================================
+       Cómo funciona (pasos)
+       ========================================================================== */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .step {
+      text-align: center;
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-verde-bosque);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+    }
+
+    .step h3 {
+      font-size: 1.2rem;
+      color: var(--color-carbon);
+      margin-bottom: var(--space-sm);
+    }
+
+    .step p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    /* ==========================================================================
+       Testimonios
+       ========================================================================== */
+    .testimonios {
+      background: var(--color-verde-bosque);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonios::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .testimonios .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .testimonios .section-head {
+      color: #fff;
+    }
+
+    .testimonios .section-head .eyebrow {
+      color: var(--color-champagne);
+    }
+
+    .testimonios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .testimonio {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      font-style: italic;
+    }
+
+    .testimonio p {
+      color: #fff;
+      font-size: 1.05rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .testimonio-author {
+      font-style: normal;
+      font-size: 0.9rem;
+      color: var(--color-champagne);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       FAQ
+       ========================================================================== */
+    .faq-grid {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .faq-item {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color var(--duration-base) var(--ease-out);
+    }
+
+    .faq-item:hover {
+      border-color: var(--color-champagne);
+    }
+
+    .faq-question {
+      padding: var(--space-md) var(--space-lg);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-carbon);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    .faq-question:hover {
+      color: var(--color-verde-bosque);
+    }
+
+    .faq-answer {
+      padding: 0 var(--space-lg) var(--space-md);
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    /* ==========================================================================
+       CTA final
+       ========================================================================== */
+    .cta-final {
+      text-align: center;
+      padding: var(--space-xl) 0;
+      background: #fff;
+    }
+
+    .cta-final h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      color: var(--color-verde-bosque);
+      margin-bottom: var(--space-md);
+    }
+
+    .cta-final p {
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto var(--space-lg);
+    }
+
+    /* ==========================================================================
+       Footer
+       ========================================================================== */
+    footer {
+      background: var(--color-carbon);
+      color: #fff;
+      padding: var(--space-xl) 0 var(--space-lg);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .footer-brand .logo {
+      color: #fff;
+      margin-bottom: var(--space-md);
+      display: block;
+    }
+
+    .footer-brand p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      max-width: 320px;
+      line-height: 1.7;
+    }
+
+    .footer-brand .concepto {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--color-champagne);
+      font-size: 1rem;
+      margin-top: var(--space-md);
+      display: block;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    .footer-col a:hover {
+      color: var(--color-champagne);
+    }
+
+    .footer-valores {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: var(--space-md);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--space-md);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ==========================================================================
+       Responsive — Mejoras para móviles
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        min-height: auto;
+        padding-bottom: var(--space-lg);
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-eyebrow,
+      .hero-content h1,
+      .hero-slogan,
+      .hero-content p,
+      .hero-actions {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        height: 420px;
+        justify-content: center;
+      }
+
+      .visual-card {
+        width: 340px;
+        height: 380px;
+      }
+
+      .autoridad {
+        grid-template-columns: 1fr;
+      }
+
+      .autoridad-visual {
+        height: 260px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      /* Header móvil */
+      .header-wrap {
+        height: 64px;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .btn-header {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      /* Menú lateral */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 100%;
+        bottom: 0;
+        width: 260px;
+        background: rgba(var(--color-marfil-rgb), 0.98);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-right: 1px solid var(--color-border);
+        height: 100vh;
+        z-index: var(--z-header);
+        transition: left var(--duration-base) var(--ease-out);
+        padding-top: 90px;
+        flex-direction: column;
+      }
+
+      nav.open {
+        left: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: var(--space-md);
+        padding: 0 var(--space-lg);
+        align-items: flex-start;
+      }
+
+      nav ul li {
+        width: 100%;
+      }
+
+      nav a {
+        display: block;
+        padding: var(--space-sm) 0;
+        font-size: 1rem;
+        border-bottom: 1px solid var(--color-border);
+        width: 100%;
+      }
+
+      /* Hero móvil — fondo de imagen diferente */
+      .hero {
+        padding: var(--space-lg) 0;
+      }
+
+      .hero-bg {
+        /* REEMPLAZAR_IMAGEN: Pon aquí tu imagen para móvil */
+        background-image: url('https://images.unsplash.com/photo-1570175777777-2d924a1f853b?q=80&w=1000&auto=format&fit=crop');
+      }
+
+      .hero-grid {
+        gap: var(--space-md);
+        padding-bottom: var(--space-md);
+      }
+
+      .hero-eyebrow {
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero-slogan {
+        font-size: 1.1rem;
+        margin-bottom: var(--space-md);
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+        max-width: none;
+        text-align: center;
+        margin-bottom: var(--space-md);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .btn-primary,
+      .btn-outline {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+        padding: 14px 24px;
+      }
+
+      .hero-visual {
+        height: 320px;
+      }
+
+      .visual-card {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        padding: var(--space-md);
+      }
+
+      .visual-image {
+        min-height: 180px;
+      }
+
+      /* Secciones móviles */
+      .section {
+        padding: var(--space-xl) 0;
+      }
+
+      .section-head h2 {
+        font-size: 1.9rem;
+      }
+
+      .section-head p {
+        font-size: 1rem;
+        text-align: center;
+      }
+
+      .valores-grid,
+      .complejos-grid,
+      .testimonios-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .valor,
+      .complejo-card,
+      .testimonio {
+        padding: var(--space-md);
+      }
+
+      .autoridad-texto {
+        padding: var(--space-lg);
+      }
+
+      .autoridad-visual {
+        height: 220px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .step {
+        max-width: none;
+      }
+
+      .faq-grid {
+        gap: var(--space-xs);
+      }
+
+      .cta-final {
+        padding: var(--space-lg) 0;
+      }
+
+      .cta-final h2 {
+        font-size: 1.8rem;
+      }
+
+      .cta-final p {
+        font-size: 1rem;
+        max-width: none;
+      }
+
+      /* Footer móvil */
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+      }
+
+      .footer-brand p {
+        max-width: none;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .footer-bottom p {
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    /* Tablets intermedias */
+    @media (min-width: 641px) and (max-width: 1024px) {
+      .valores-grid,
+      .complejos-grid,
+      .testimonios-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .is-visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-wrap">
+      <div class="logo">EVEN<span>CIA</span></div>
+      <nav>
+        <ul>
+          <li><a href="#valores">Valores</a></li>
+          <li><a href="#complejos">Complejos</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#testimonios">Testimonios</a></li>
+        </ul>
+      </nav>
+      <button class="btn-header">Descubrir EVENCIA</button>
+      <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero con fondo de imagen -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-grid">
+      <div class="hero-content reveal stagger-1">
+        <span class="hero-eyebrow">Nutricosmética premium</span>
+        <h1>La esencia de la belleza.<br>La evidencia de la<span> ciencia.</span></h1>
+        <p class="hero-slogan">EVENCIA. La esencia de la belleza, la evidencia de la ciencia.</p>
+        <p>Complejos formulados con rigor científico por Ramón de Cangas, nutricionista y biólogo. Ingredientes seleccionados, formulaciones estudiadas y una rutina pensada para la constancia. Belleza que nace desde el interior.</p>
+        <div class="hero-actions">
+          <button class="btn-primary">Explorar la colección</button>
+          <button class="btn-outline">Conoce nuestros valores</button>
+        </div>
+      </div>
+      <div class="hero-visual reveal stagger-3">
+        <div class="visual-ring"></div>
+        <div class="visual-card">
+          <div class="visual-image">
+            <span>Tu rutina, tu evidencia</span>
+          </div>
+          <div class="visual-badge">Fórmula premium · Origen responsable</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="section" id="valores">
+    <div class="container">
+      <div class="section-head reveal stagger-1">
+        <span class="eyebrow">Nuestra filosofía</span>
+        <h2>Tres valores,<br>una misma dirección</h2>
+        <p>La ciencia aporta credibilidad. La identidad visual aporta elegancia. Juntos, construyen una marca en la que puedes confiar.</p>
+      </div>
+
+      <div class="valores-grid">
+        <div class="valor reveal stagger-2">
+          <div class="valor-icon">🔬</div>
+          <h3>Ciencia y rigor</h3>
+          <p>Conocimiento científico presente en la filosofía, el desarrollo y la comunicación de cada producto.</p>
+        </div>
+        <div class="valor reveal stagger-3">
+          <div class="valor-icon">✦</div>
+          <h3>Calidad y excelencia</h3>
+          <p>Formulaciones cuidadosamente seleccionadas y una experiencia premium, de la presentación al resultado.</p>
+        </div>
+        <div class="valor reveal stagger-4">
+          <div class="valor-icon">🤝</div>
+          <h3>Confianza y transparencia</h3>
+          <p>Relaciones duraderas mediante una comunicación honesta, profesional y responsable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Autoridad: Ramón de Cangas -->
+  <section class="section">
+    <div class="container">
+      <div class="autoridad reveal stagger-1">
+        <div class="autoridad-texto">
+          <span class="eyebrow">Desarrollado por</span>
+          <h2>Ramón de Cangas,<br>nutricionista y biólogo</h2>
+          <p>EVENCIA nace de la visión de Ramón de Cangas, con el propósito de desarrollar una nutricosmética de alta calidad fundamentada en el conocimiento científico. Cada fórmula responde a la convicción de que la belleza y el bienestar se abordan desde el interior.</p>
+          <span class="firma">Ramón de Cangas · Nutricionista y biólogo</span>
+        </div>
+        <div class="autoridad-visual reveal stagger-2">
+          <span>Fundamento científico · Rigor profesional</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complejos -->
+  <section class="section" id="complejos">
+    <div class="container">
+      <div class="section-head reveal stagger-1">
+        <span class="eyebrow">La colección</span>
+        <h2>Cuatro complejos,<br>un mismo estándar</h2>
+        <p>EVENCIA nace con cuatro productos formulados con rigor y vocación de crecimiento.</p>
+      </div>
+
+      <div class="complejos-grid">
+        <article class="complejo-card reveal stagger-2">
+          <div class="complejo-icon">🌿</div>
+          <h3>Luminosidad</h3>
+          <p>Para una piel uniforme y visiblemente más firme, desde el interior.</p>
+        </article>
+        <article class="complejo-card reveal stagger-3">
+          <div class="complejo-icon">💎</div>
+          <h3>Fuerza</h3>
+          <p>Cabello más denso y uñas menos quebradizas, con respaldo profesional.</p>
+        </article>
+        <article class="complejo-card reveal stagger-4">
+          <div class="complejo-icon">🕊️</div>
+          <h3>Equilibrio</h3>
+          <p>Apoyo diario para el bienestar general del organismo.</p>
+        </article>
+        <article class="complejo-card reveal stagger-1">
+          <div class="complejo-icon">✦</div>
+          <h3>Bienestar integral</h3>
+          <p>Formulación pensada para el autocuidado constante y la prevención.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="section" id="como-funciona">
+    <div class="container">
+      <div class="section-head reveal stagger-1">
+        <span class="eyebrow">El método</span>
+        <h2>Tres pasos,<br>una rutina</h2>
+        <p>Simple, constante y sin complicaciones. Diseñado para integrarse en tu día a día.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal stagger-2">
+          <div class="step-number">01</div>
+          <h3>Elige tu complejo</h3>
+          <p>Según lo que tu cuerpo pida hoy, con criterio profesional.</p>
+        </div>
+        <div class="step reveal stagger-3">
+          <div class="step-number">02</div>
+          <h3>Toma diariamente</h3>
+          <p>Un ritual de menos de un minuto, con constancia.</p>
+        </div>
+        <div class="step reveal stagger-4">
+          <div class="step-number">03</div>
+          <h3>Observa el cambio</h3>
+          <p>Con el tiempo, la constancia se convierte en evidencia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section class="section testimonios" id="testimonios">
+    <div class="container">
+      <div class="section-head reveal stagger-1">
+        <span class="eyebrow">Voces</span>
+        <h2>Lo que dicen<br>quienes lo viven</h2>
+      </div>
+
+      <div class="testimonios-grid">
+        <div class="testimonio reveal stagger-2">
+          <p>"Desde que empecé con EVENCIA noto mi piel más firme y mi cabello con más cuerpo. Es un ritual que ya no quiero saltarme."</p>
+          <div class="testimonio-author">Marta, 34 años</div>
+        </div>
+        <div class="testimonio reveal stagger-3">
+          <p>"Lo que más valoro es que no promete lo imposible. Los resultados llegan con la constancia, y eso se siente honesto."</p>
+          <div class="testimonio-author">Lucía, 29 años</div>
+        </div>
+        <div class="testimonio reveal stagger-4">
+          <p>"El empaque, la fórmula, el respaldo de Ramón de Cangas. Todo transmite que esto es algo diferente."</p>
+          <div class="testimonio-author">Sofía, 41 años</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal stagger-1">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2>Todo lo que<br>necesitas saber</h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item reveal stagger-2">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            ¿Cuánto tiempo tarda en notarse el efecto?
+            <span>+</span>
+          </button>
+          <div class="faq-answer">Cada cuerpo es diferente, pero lo habitual es notar cambios entre la cuarta y la octava semana de uso diario y constante.</div>
+        </div>
+        <div class="faq-item reveal stagger-3">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            ¿Son aptos para hombres y mujeres?
+            <span>+</span>
+          </button>
+          <div class="faq-answer">Sí. EVENCIA es una marca inclusiva, atractiva para ambos sexos, desarrollada para adultos que valoran su imagen, salud y bienestar.</div>
+        </div>
+        <div class="faq-item reveal stagger-4">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            ¿Puedo combinar varios complejos?
+            <span>+</span>
+          </button>
+          <div class="faq-answer">Sí, están diseñados para complementarse. Si tienes dudas, consulta con tu profesional de salud antes de empezar.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final reveal stagger-1">
+    <div class="container">
+      <h2>Comienza tu rutina EVENCIA</h2>
+      <p>Descubre la colección completa y recibe tu primer pedido con envío premium.</p>
+      <button class="btn-primary" style="padding: 16px 32px; font-size: 1.1rem;">Ver la colección</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">EVEN<span style="color: var(--color-champagne)">CIA</span></span>
+          <p>Nutricosmética premium desarrollada con rigor científico por Ramón de Cangas, nutricionista y biólogo. Belleza desde el interior, con fundamento.</p>
+          <span class="concepto">La esencia de la belleza. La evidencia de la ciencia.</span>
+        </div>
+        <div class="footer-col">
+          <h4>Colección</h4>
+          <ul>
+            <li><a href="#">Luminosidad</a></li>
+            <li><a href="#">Fuerza</a></li>
+            <li><a href="#">Equilibrio</a></li>
+            <li><a href="#">Bienestar integral</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Información</h4>
+          <ul>
+            <li><a href="#">Valores</a></li>
+            <li><a href="#">Cómo funciona</a></li>
+            <li><a href="#">Preguntas frecuentes</a></li>
+            <li><a href="#">Envíos y devoluciones</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-valores">
+        Ciencia y rigor · Calidad y excelencia · Confianza y transparencia
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 EVENCIA. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       IntersectionObserver para revelar elementos al hacer scroll
+       (emil-design-eng: solo opacity + transform, bajo costo)
+       ========================================================================== */
+    const observerOptions = {
+      threshold: 0.12,
+      rootMargin: '0px 0px -80px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      observer.observe(el);
+    });
+
+    /* ==========================================================================
+       Menú móvil (toggle simple, sin dependencias)
+       ========================================================================== */
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('header nav');
+
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', nav.classList.contains('open'));
+    });
+
+    /* Cerrar menú al hacer clic en un enlace */
+    document.querySelectorAll('nav a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* Cerrar menú al hacer clic fuera */
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+        nav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
+</body>
+</html>
